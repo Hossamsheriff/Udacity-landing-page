@@ -1,0 +1,120 @@
+/**
+ * 
+ * Manipulating the DOM exercise.
+ * Exercise programmatically builds navigation,
+ * scrolls to anchors from navigation,
+ * and highlights section in viewport upon scrolling.
+ * 
+ * Dependencies: None
+ * 
+ * JS Version: ES2015/ES6
+ * 
+ * JS Standard: ESlint
+ * 
+*/
+
+/**
+ * Comments should be present at the beginning of each procedure and class.
+ * Great to have comments before crucial code sections within the procedure.
+*/
+
+/**
+ * Define Global Variables
+ * 
+*/
+
+//sections variable contains array of sections displayed on website
+const sections = Array.from(document.querySelectorAll('section'));
+const menu = document.getElementById('navbar__list');
+
+
+/**
+ * End Global Variables
+ * Start Helper Functions
+ * 
+*/
+
+function listItems(){
+    for(sec of sections){
+
+        // create an item for each section
+        listItem = document.createElement("li");
+        // add text for each item
+        listItem.innerHTML = `<li><a href="#${sec.id}" data-nav="${sec.id}" class="menu__link">${sec.dataset.nav}</a>`;
+
+        // add item to Menu
+        menu.appendChild(listItem);
+    }
+}
+
+// call the function to create the navbar
+listItems();
+
+
+// This function determines if the section is in viewport
+function sectionView(element ){
+    let sectionPostiton=element.getBoundingClientRect();
+    return (sectionPostiton.top>=1);
+}
+
+// This function gives the section in the viewport a different appearance 
+function toggle(){
+    for(sec of sections){
+        // is the section in viewport
+        if(sectionView(sec)){
+            // check if class "your-active-class" is included or not
+            if(!sec.classList.contains('your-active-class')){
+                // if not added,then add it
+                sec.classList.add('your-active-class'); 
+            }
+            else{
+                // if already added, remove it
+                sec.classList.remove('your-active-class');
+            }
+        }
+    }
+}
+
+document.addEventListener('scroll',toggle);
+
+// When clicking an item in navigation bar it takes you to that specific section
+menu.addEventListener('click',(goToSec)=>{
+    goToSec.preventDefault();
+    if(goToSec.target.dataset.nav){
+        document.getElementById(`${goToSec.target.dataset.nav}`).scrollIntoView({behavior:"smooth"});
+
+        setTimeout(()=>{
+            location.hash=`${goToSec.target.dataset.nav}`;
+        },500);
+    }
+})
+
+
+
+/**
+ * End Helper Functions
+ * Begin Main Functions
+ * 
+*/
+
+// build the nav
+
+// Add class 'active' to section when near top of viewport
+
+
+// Scroll to anchor ID using scrollTO event
+
+
+/**
+ * End Main Functions
+ * Begin Events
+ * 
+*/
+
+// Build menu 
+
+// Scroll to section on link click
+
+// Set sections as active
+
+
